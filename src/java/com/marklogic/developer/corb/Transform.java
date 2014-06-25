@@ -39,6 +39,9 @@ public class Transform extends AbstractTask {
             session = newSession();
             Request request = session.newModuleInvoke(moduleUri);
             request.setNewStringVariable("URI", inputUri);
+            if(properties.containsKey(Manager.URIS_MODULE_METADATA)){
+            	request.setNewStringVariable("URIS_MODULE_METADATA", properties.getProperty(Manager.URIS_MODULE_METADATA));
+            }
             // try to avoid thread starvation
             Thread.yield();
             String response = session.submitRequest(request).asString();
