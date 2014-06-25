@@ -120,6 +120,7 @@ public class Monitor implements Runnable {
         logger.info("waiting for pool to terminate");
         pool.awaitTermination(1, TimeUnit.SECONDS);
         logger.info("completed all tasks " + getProgressMessage());
+        runPostBatchTaskIfExists(); //post batch tasks
     }
 
     private long showProgress() {
@@ -159,6 +160,20 @@ public class Monitor implements Runnable {
      */
     public void shutdownNow() {
         shutdownNow = true;
+    }
+    
+    private void runPostBatchTaskIfExists(){
+    	if(null != manager.getOptions().getPostBatchTaskClass() || null != manager.getOptions().getPostBatchModule()){
+    		logger.info("Running post batch Task");
+    		TaskFactory tf = new TaskFactory(manager);
+    		try{
+        		Task postTask = tf.newPostBatchTask("");
+    			String response = postTask.call();
+    			logger.info("Post batch task complete - "+response);
+    		}catch(Exception exc){
+    			logger.logException("Error invoking post batch task", exc);
+    		}
+    	}
     }
 
 }

@@ -18,57 +18,66 @@
  */
 package com.marklogic.developer.corb;
 
-import com.marklogic.xcc.ContentSource;
-import com.marklogic.xcc.Session;
-
 /**
  * @author Michael Blakeley, michael.blakeley@marklogic.com
  * 
  */
 public class TaskFactory {
-    protected ContentSource contentSource = null;
-
-    protected String moduleUri = null;
+    protected Manager manager;
 
     /**
      * @param _cs
      * @param _uri
      */
-    public TaskFactory(ContentSource _cs, String _uri) {
-        contentSource = _cs;
-        moduleUri = _uri;
+    public TaskFactory(Manager manager) {
+    	this.manager = manager;
     }
 
     /**
      * @param _uri
      * @return
      */
-    public Transform newTask(String _uri) {
-        if (null == contentSource) {
-            throw new NullPointerException("null content source");
+    public Task newProcessTask(String _uri) {
+    	if(null == manager.getOptions().getProcessTaskClass() && null == manager.getOptions().getProcessModule()){
+    		throw new NullPointerException("null process task and xquery module");
+    	}
+    	if(null != manager.getOptions().getProcessModule() && (null == _uri || null == manager.getContentSource())){
+    		throw new NullPointerException("null content source or input uri");
+    	}
+        try{
+        	Task task = manager.getOptions().getProcessTaskClass() == null ? 
+        				new Transform() : manager.getOptions().getProcessTaskClass().newInstance();
+        	task.setContentSource(manager.getContentSource());
+        	if(manager.getOptions().getProcessModule() != null){
+        		task.setModuleURI(manager.getOptions().getModuleRoot() + manager.getOptions().getProcessModule());
+        	}
+        	task.setProperties(manager.getProperties());
+        	task.setInputURI(_uri);      
+        	return task;
+        }catch(Exception exc){
+        	throw new IllegalArgumentException(exc.getMessage(),exc);
         }
-        if (null == moduleUri) {
-            throw new NullPointerException("null module uri");
-        }
-        if (null == _uri) {
-            throw new NullPointerException("null uri");
-        }
-
-        // pass a reference to this factory, for later
-        return new Transform(this, _uri);
     }
-
-    /**
-     * @return
-     */
-    public String getModuleUri() {
-        return moduleUri;
-    }
-
-    /**
-     * @return
-     */
-    public Session newSession() {
-        return contentSource.newSession();
+    
+    public Task newPostBatchTask(String _uri){
+    	if(null == manager.getOptions().getPostBatchTaskClass() && null == manager.getOptions().getPostBatchModule()){
+    		throw new NullPointerException("null post batch task and module");
+    	}
+    	if(null != manager.getOptions().getPostBatchModule() && null == manager.getContentSource()){
+    		throw new NullPointerException("null content source");
+    	}
+        try{
+        	Task task = manager.getOptions().getPostBatchTaskClass() == null ? 
+        				new Transform() : manager.getOptions().getPostBatchTaskClass().newInstance();
+        	task.setContentSource(manager.getContentSource());
+        	if(manager.getOptions().getPostBatchModule() != null){
+        		task.setModuleURI(manager.getOptions().getModuleRoot() + manager.getOptions().getPostBatchModule());
+        	}
+        	task.setProperties(manager.getProperties());
+        	task.setInputURI(_uri);      
+        	return task;
+        }catch(Exception exc){
+        	throw new IllegalArgumentException(exc.getMessage(),exc);
+        }
     }
 }

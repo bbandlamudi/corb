@@ -324,16 +324,20 @@ public class Utilities {
      * @throws IOException
      */
     public static byte[] getBytes(File contentFile) throws IOException {
-        InputStream is = new FileInputStream(contentFile);
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        byte[] buf = new byte[BUFFER_SIZE];
-        int read;
-
-        while ((read = is.read(buf)) > 0) {
-            os.write(buf, 0, read);
+        InputStream is = null;
+        try{
+	        is = new FileInputStream(contentFile);
+	        ByteArrayOutputStream os = new ByteArrayOutputStream();
+	        byte[] buf = new byte[BUFFER_SIZE];
+	        int read;
+	
+	        while ((read = is.read(buf)) > 0) {
+	            os.write(buf, 0, read);
+	        }
+	        return os.toByteArray();
+        }finally{
+        	if(is != null) is.close();
         }
-
-        return os.toByteArray();
     }
 
     /**

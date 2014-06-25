@@ -1,1 +1,27 @@
 For more information see "http://marklogic.github.com/corb/":http://marklogic.github.com/corb/
+
+Running Corb
+--------------
+
+The entry point is the main method in the com.marklogic.developer.corb.Manager class. 
+
+Corb needs one or more of the following parameters as (If specified in more then one place command line argument takes precedence over VM argument which take precedence over corb.properties)
+1) command-line arguments 
+2) VM arguments ex: -DXCC-CONNECTION-URI=xcc://admin:admin@localhost:8202 or 
+3) corb.properties in class path:
+
+XCC-CONNECTION-URI
+COLLECTION-NAME (can be empty string)
+XQUERY-MODULE (provide filesystem path if not contained in the corb package)
+THREAD-COUNT (number of worker threads; default = 1)
+URIS-MODULE (alternate URI selection module, replacing provided Corb default).
+MODULE-ROOT (assumes '/' if not provided)
+MODULES-DATABASE (uses the XCC-CONNECTION-URI if not provided; use 0 for filesystem)
+INSTALL (default is true; set to 'false' or '0' to skip installation)
+PROCESS-TASK (Java Class that implements com.marklogic.developer.Task or extends com.marklogic.developer.AbstractTask- can be used in place or in addition to XQUERY-MODULE)
+POST-BATCH-XQUERY-MODULE (XQuery module, if specified, will be run after batch processing is completed)
+POST-BATCH-TASK (Java Class that implements com.marklogic.developer.Task or extends com.marklogic.developer.AbstractTask- can be used in place or in addition to POST-BATCH-XQUERY-MODULE)
+
+Running from command line:
+com.marklogic.developer.corb.Manager \
+  XCC-CONNECTION-URI [COLLECTION-NAME [XQUERY-MODULE [ THREAD-COUNT [ URIS-MODULE [ MODULE-ROOT [ MODULES-DATABASE [ INSTALL [ PROCESS-TASK  [ POST-BATCH-XQUERY-MODULE  [ POST-BATCH-TASK ] ] ] ] ] ] ] ] ] ]
