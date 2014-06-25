@@ -26,6 +26,10 @@ import com.marklogic.xcc.Session;
  *
  */
 public class Transform extends AbstractTask {
+	boolean metdataOnXQuery = false;
+	public void setUriModulesMedataToXQuery(boolean metdataOnXQuery){
+		this.metdataOnXQuery = metdataOnXQuery;
+	}
     /*
      * (non-Javadoc)
      *
@@ -39,7 +43,7 @@ public class Transform extends AbstractTask {
             session = newSession();
             Request request = session.newModuleInvoke(moduleUri);
             request.setNewStringVariable("URI", inputUri);
-            if(properties.containsKey(Manager.URIS_MODULE_METADATA)){
+            if(metdataOnXQuery && properties.containsKey(Manager.URIS_MODULE_METADATA)){
             	request.setNewStringVariable("URIS_MODULE_METADATA", properties.getProperty(Manager.URIS_MODULE_METADATA));
             }
             // try to avoid thread starvation

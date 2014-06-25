@@ -168,6 +168,9 @@ public class Monitor implements Runnable {
     		TaskFactory tf = new TaskFactory(manager);
     		try{
         		Task postTask = tf.newPostBatchTask("");
+        		if(postTask instanceof Transform){
+        			((Transform)postTask).setUriModulesMedataToXQuery(true);
+        		}
     			String response = postTask.call();
     			logger.info("Post batch task complete - "+response);
     		}catch(Exception exc){
