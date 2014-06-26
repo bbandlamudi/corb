@@ -209,21 +209,25 @@ public class Manager implements Runnable {
         
         //java class for processing individual tasks. 
         //If specified, it is used instead of xquery module, but xquery module is still required. 
-        Class<?> processCls = Class.forName(processTask);
-        if(Task.class.isAssignableFrom(processCls)){
-        	processCls.newInstance(); //sanity check
-        	if(postBatchTask != null) options.setPostBatchTaskClass((Class<? extends Task>)processCls.asSubclass(Task.class));
-        }else{
-        	throw new IllegalArgumentException("PROCESS-TASK must be of type com.marklogic.developer.Task");
+        if(processTask != null){
+	        Class<?> processCls = Class.forName(processTask);
+	        if(Task.class.isAssignableFrom(processCls)){
+	        	processCls.newInstance(); //sanity check
+	        	if(postBatchTask != null) options.setPostBatchTaskClass((Class<? extends Task>)processCls.asSubclass(Task.class));
+	        }else{
+	        	throw new IllegalArgumentException("PROCESS-TASK must be of type com.marklogic.developer.Task");
+	        }
         }
         
-        if(postBatchModule != null) options.setPostBatchModule(postBatchModule);    
-        Class<?> pbatchCls = Class.forName(postBatchTask);
-        if(Task.class.isAssignableFrom(pbatchCls)){
-        	pbatchCls.newInstance(); //sanity check
-        	if(postBatchTask != null) options.setPostBatchTaskClass((Class<? extends Task>)pbatchCls.asSubclass(Task.class));
-        }else{
-        	throw new IllegalArgumentException("POST-BATCH-TASK must be of type com.marklogic.developer.Task");
+        if(postBatchModule != null) options.setPostBatchModule(postBatchModule);
+        if(postBatchTask != null){
+	        Class<?> pbatchCls = Class.forName(postBatchTask);
+	        if(Task.class.isAssignableFrom(pbatchCls)){
+	        	pbatchCls.newInstance(); //sanity check
+	        	if(postBatchTask != null) options.setPostBatchTaskClass((Class<? extends Task>)pbatchCls.asSubclass(Task.class));
+	        }else{
+	        	throw new IllegalArgumentException("POST-BATCH-TASK must be of type com.marklogic.developer.Task");
+	        }
         }
         
         if(null == options.getProcessTaskClass() && null == options.getProcessModule()){
@@ -315,6 +319,10 @@ public class Manager implements Runnable {
             stop();
             // fatal
             throw new RuntimeException(e);
+        } catch (Exception e){
+        	logger.logException("unexpected", e);
+        	stop();
+        	throw new RuntimeException(e);
         }
     }
 
@@ -500,7 +508,7 @@ public class Manager implements Runnable {
 
             ResultSequence res = session.submitRequest(req);
             ResultItem next = res.next();
-            if(!(next instanceof XSInteger)){
+            if(!(next.getItem() instanceof XSInteger)){
             	properties.put("URIS_MODULE_METADATA", next.asString());
             	next = res.next();
             }
