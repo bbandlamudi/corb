@@ -8,7 +8,7 @@ The entry point is the main method in the com.marklogic.developer.corb.Manager c
 Corb needs one or more of the following parameters as (If specified in more then one place command line argument takes precedence over VM argument which take precedence over corb.properties)
 1) command-line arguments 
 2) VM arguments ex: -DXCC-CONNECTION-URI=xcc://admin:admin@localhost:8202 or 
-3) corb.properties in class path:
+3) corb.properties in class path
 
 XCC-CONNECTION-URI
 COLLECTION-NAME (can be empty string)
@@ -25,6 +25,6 @@ POST-BATCH-TASK (Java Class that implements com.marklogic.developer.Task or exte
 Running from command line:
 com.marklogic.developer.corb.Manager XCC-CONNECTION-URI [COLLECTION-NAME [XQUERY-MODULE [ THREAD-COUNT [ URIS-MODULE [ MODULE-ROOT [ MODULES-DATABASE [ INSTALL [ PROCESS-TASK  [ POST-BATCH-XQUERY-MODULE  [ POST-BATCH-TASK ] ] ] ] ] ] ] ] ] ]
   
--DXCC-CONNECTION-URI=xcc://user:password@host:port/[ database ] -DXQUERY-MODULE=module-name.xqy -DTHREAD-COUNT=10 -DURIS-MODULE=get-uris.xqy -D... com.marklogic.developer.corb.Manager
+-DXCC-CONNECTION-URI=xcc://user:password@host:port/[ database ] -DXQUERY-MODULE=module-name.xqy -DTHREAD-COUNT=10 -DURIS-MODULE=get-uris.xqy -DPOST-BATCH-XQUERY-MODULE=post-batch.xqy -D... com.marklogic.developer.corb.Manager
 
 com.marklogic.developer.corb.Manager (Note: Looks for corb.properties file in the class path)

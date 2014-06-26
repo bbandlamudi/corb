@@ -172,7 +172,7 @@ public class Monitor implements Runnable {
         			((Transform)postTask).setUriModulesMedataToXQuery(true);
         		}
     			String response = postTask.call();
-    			logger.info("Post batch task complete - "+response);
+    			logger.info("Post batch task complete. Response: "+response);
     		}catch(Exception exc){
     			logger.logException("Error invoking post batch task", exc);
     		}

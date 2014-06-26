@@ -284,6 +284,7 @@ public class Manager implements Runnable {
         				+ " -DXQUERY-MODULE=module-name.xqy"
         				+ " -DTHREAD-COUNT=10"
         				+ " -DURIS-MODULE=get-uris.xqy"
+        				+ " -DPOST-BATCH-XQUERY-MODULE=post-batch.xqy"
         				+ " -D... "
         				+ NAME);
         err.println("\nusage 3:");
