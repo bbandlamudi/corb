@@ -28,7 +28,8 @@ import com.marklogic.developer.SimpleLogger;
 
 /**
  * @author Michael Blakeley, michael.blakeley@marklogic.com
- *
+ * @author Bhagat Bandlamudi, MarkLogic Corporation
+ * 
  */
 public class Monitor implements Runnable {
 

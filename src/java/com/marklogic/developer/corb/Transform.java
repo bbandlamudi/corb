@@ -23,6 +23,7 @@ import com.marklogic.xcc.Session;
 
 /**
  * @author Michael Blakeley, michael.blakeley@marklogic.com
+ * @author Bhagat Bandlamudi, MarkLogic Corporation
  *
  */
 public class Transform extends AbstractTask {

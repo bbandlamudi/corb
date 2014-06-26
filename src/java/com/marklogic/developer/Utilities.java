@@ -36,6 +36,7 @@ import java.util.List;
 
 /**
  * @author mike.blakeley@marklogic.com
+ * @author Bhagat Bandlamudi, MarkLogic Corporation
  *
  */
 public class Utilities {

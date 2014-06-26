@@ -68,6 +68,7 @@ import com.marklogic.xcc.types.XdmItem;
 /**
  * @author Michael Blakeley, MarkLogic Corporation
  * @author Colleen Whitney, MarkLogic Corporation
+ * @author Bhagat Bandlamudi, MarkLogic Corporation
  */
 public class Manager implements Runnable {
 

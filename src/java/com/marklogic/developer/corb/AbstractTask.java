@@ -4,7 +4,11 @@ import java.util.Properties;
 
 import com.marklogic.xcc.ContentSource;
 import com.marklogic.xcc.Session;
-
+/**
+ * 
+ * @author Bhagat Bandlamudi, MarkLogic Corporation
+ *
+ */
 public abstract class AbstractTask implements Task{
 	protected ContentSource cs;
 	protected String moduleUri;

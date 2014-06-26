@@ -21,6 +21,7 @@ package com.marklogic.developer.corb;
 /**
  * @author Michael Blakeley, michael.blakeley@marklogic.com
  * @author Colleen Whitney, colleen.whitney@marklogic.com
+ * @author Bhagat Bandlamudi, MarkLogic Corporation
  * 
  */
 public class TransformOptions {

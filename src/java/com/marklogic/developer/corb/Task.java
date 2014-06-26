@@ -1,6 +1,11 @@
 package com.marklogic.developer.corb;
 
 import java.util.Properties;
+
+/**
+ * @author Bhagat Bandlamudi, MarkLogic Corporation
+ * 
+ */
 import java.util.concurrent.Callable;
 
 import com.marklogic.xcc.ContentSource;

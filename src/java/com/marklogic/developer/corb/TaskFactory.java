@@ -20,6 +20,7 @@ package com.marklogic.developer.corb;
 
 /**
  * @author Michael Blakeley, michael.blakeley@marklogic.com
+ * @author Bhagat Bandlamudi, MarkLogic Corporation
  * 
  */
 public class TaskFactory {
