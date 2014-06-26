@@ -273,12 +273,21 @@ public class Manager implements Runnable {
      */
     private static void usage() {
         PrintStream err = System.err;
-        err.println("\nusage:");
+        err.println("usage 1:");
         err.println("\t" + NAME
                 + " xcc://user:password@host:port/[ database ]"
                 + " input-selector module-name.xqy"
                 + " [ thread-count [ uris-module [ module-root"
                 + " [ modules-database [ install ] ] ] ] ]");
+        err.println("\nusage 2:");
+        err.println("\t"+ "-DXCC-CONNECTION-URI=xcc://user:password@host:port/[ database ]"
+        				+ " -DXQUERY-MODULE=module-name.xqy"
+        				+ " -DTHREAD-COUNT=10"
+        				+ " -DURIS-MODULE=get-uris.xqy"
+        				+ " -D... "
+        				+ NAME);
+        err.println("\nusage 3:");
+        err.println("\t"+NAME+" (Note: Looks for corb.properties file in the class path)");
     }
 
     /*
