@@ -174,7 +174,7 @@ public class Manager implements Runnable {
     public static void main(String[] args) throws URISyntaxException, IOException, 
     			ClassNotFoundException, InstantiationException, IllegalAccessException {    	
         Properties props = new Properties();
-        InputStream is = Manager.class.getResourceAsStream("corb.properties");
+        InputStream is = Manager.class.getResourceAsStream("/corb.properties");
         if(is != null){
         	props.load(is);
         }
@@ -477,8 +477,8 @@ public class Manager implements Runnable {
         logger.info("Configured uri module: " + options.getUrisModule());
         logger.info("Configured process module: " + options.getProcessModule());
         logger.info("Configured process task: " + options.getProcessTaskClass());
-        logger.info("Configured post batch module: " + options.getProcessModule());
-        logger.info("Configured post batch task: " + options.getProcessTaskClass());
+        logger.info("Configured post batch module: " + options.getPostBatchModule());
+        logger.info("Configured post batch task: " + options.getPostBatchTaskClass());
     }
 
     /**
