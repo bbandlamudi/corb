@@ -23,8 +23,19 @@ POST-BATCH-XQUERY-MODULE (XQuery module, if specified, will be run after batch p
 POST-BATCH-TASK (Java Class that implements com.marklogic.developer.Task or extends com.marklogic.developer.AbstractTask- can be used in place or in addition to POST-BATCH-XQUERY-MODULE)
 
 Running from command line:
+Usage 1:
 com.marklogic.developer.corb.Manager XCC-CONNECTION-URI [COLLECTION-NAME [XQUERY-MODULE [ THREAD-COUNT [ URIS-MODULE [ MODULE-ROOT [ MODULES-DATABASE [ INSTALL [ PROCESS-TASK  [ POST-BATCH-XQUERY-MODULE  [ POST-BATCH-TASK ] ] ] ] ] ] ] ] ] ]
-  
+
+Usage 2:
 -DXCC-CONNECTION-URI=xcc://user:password@host:port/[ database ] -DXQUERY-MODULE=module-name.xqy -DTHREAD-COUNT=10 -DURIS-MODULE=get-uris.xqy -DPOST-BATCH-XQUERY-MODULE=post-batch.xqy -D... com.marklogic.developer.corb.Manager
 
+Usage 3:
 com.marklogic.developer.corb.Manager (Note: Looks for corb.properties file in the class path)
+
+Sample corb.properties
+----
+XCC-CONNECTION-URI=xcc://user:password@localhost:8202/
+XQUERY-MODULE=SampleCorbJob.xqy
+THREAD-COUNT=10
+URIS-MODULE=get-uris.xqy
+POST-BATCH-XQUERY-MODULE=post-batch.xqy
