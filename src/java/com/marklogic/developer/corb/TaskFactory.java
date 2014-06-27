@@ -83,7 +83,7 @@ public class TaskFactory {
     	task.setProperties(manager.getProperties());
     	task.setInputURI(_uri);
     	if(task instanceof ExportToFileTask){
-    		((ExportToFileTask)task).setExportFileDir(manager.getOptions().getExportFileDir());
+    		((ExportToFileTask)task).setExportDir(manager.getOptions().getExportFileDir());
     	}
     }
 }

@@ -170,7 +170,7 @@ public class Monitor implements Runnable {
     		try{
         		Task postTask = tf.newPostBatchTask("");
         		if(postTask instanceof Transform){
-        			((Transform)postTask).setUriModulesMedataToXQuery(true);
+        			((Transform)postTask).setUrisBatchRefToXQuery(true);
         		}
     			String response = postTask.call();
     			logger.info("Post batch task complete. Response: "+response);

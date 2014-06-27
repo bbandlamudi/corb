@@ -110,7 +110,7 @@ public class Manager implements Runnable {
 
     }
     
-    public static String URIS_MODULE_METADATA = "URIS_MODULE_METADATA";
+    public static String URIS_BATCH_REF = "URIS_BATCH_REF";
 
     private static String versionMessage = "version " + VERSION + " on "
             + System.getProperty("java.version") + " ("
@@ -234,14 +234,14 @@ public class Manager implements Runnable {
         
         if(exportFileDir != null){
         	try{
-        	//create a sample file and check for access exceptions
-        	File dirFile = new File(exportFileDir);
-        	//create the current direct if it doesn't exist. Don't create parent directories. 
-        	dirFile.mkdir(); 
-        	File sample = new File(dirFile,"sample.txt");
-        	sample.createNewFile();
-            sample.delete();       	
-        	options.setExportFileDir(exportFileDir);
+	        	//create a sample file and check for access exceptions
+	        	File dirFile = new File(exportFileDir);
+	        	//create the current direct if it doesn't exist. Don't create parent directories. 
+	        	dirFile.mkdir(); 
+	        	File sample = new File(dirFile,"sample.txt");
+	        	sample.createNewFile();
+	            sample.delete();       	
+	        	options.setExportFileDir(exportFileDir);
         	}catch(IOException exc){
         		throw new IOException("While accing "+exportFileDir+": "+exc.getMessage(),exc);
         	}
@@ -536,7 +536,7 @@ public class Manager implements Runnable {
             ResultSequence res = session.submitRequest(req);
             ResultItem next = res.next();
             if(!(next.getItem() instanceof XSInteger)){
-            	properties.put("URIS_MODULE_METADATA", next.asString());
+            	properties.put(URIS_BATCH_REF, next.asString());
             	next = res.next();
             }
 
