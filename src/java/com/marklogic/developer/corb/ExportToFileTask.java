@@ -23,7 +23,7 @@ public class ExportToFileTask extends AbstractTask {
 		this.exportFileDir = exportFileDir;
 	}
 	
-	private ResultSequence invoke() throws Exception{
+	protected ResultSequence invoke() throws Exception{
 		Thread.yield();
         Session session = null;
         try {
@@ -46,7 +46,7 @@ public class ExportToFileTask extends AbstractTask {
         }
 	}
 	
-	private String getFileName(){
+	protected String getFileName(){
 		return inputUri.substring(inputUri.lastIndexOf('/')+1);
 	}
 
