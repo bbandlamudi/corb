@@ -48,12 +48,10 @@ public class TaskFactory {
         try{
         	Task task = manager.getOptions().getProcessTaskClass() == null ? 
         				new Transform() : manager.getOptions().getProcessTaskClass().newInstance();
-        	task.setContentSource(manager.getContentSource());
         	if(manager.getOptions().getProcessModule() != null){
         		task.setModuleURI(manager.getOptions().getModuleRoot() + manager.getOptions().getProcessModule());
         	}
-        	task.setProperties(manager.getProperties());
-        	task.setInputURI(_uri);      
+        	setupTask(task,_uri);
         	return task;
         }catch(Exception exc){
         	throw new IllegalArgumentException(exc.getMessage(),exc);
@@ -70,15 +68,22 @@ public class TaskFactory {
         try{
         	Task task = manager.getOptions().getPostBatchTaskClass() == null ? 
         				new Transform() : manager.getOptions().getPostBatchTaskClass().newInstance();
-        	task.setContentSource(manager.getContentSource());
         	if(manager.getOptions().getPostBatchModule() != null){
         		task.setModuleURI(manager.getOptions().getModuleRoot() + manager.getOptions().getPostBatchModule());
         	}
-        	task.setProperties(manager.getProperties());
-        	task.setInputURI(_uri);      
+        	setupTask(task,_uri);
         	return task;
         }catch(Exception exc){
         	throw new IllegalArgumentException(exc.getMessage(),exc);
         }
+    }
+    
+    private void setupTask(Task task, String _uri){
+    	task.setContentSource(manager.getContentSource());
+    	task.setProperties(manager.getProperties());
+    	task.setInputURI(_uri);
+    	if(task instanceof ExportToFileTask){
+    		((ExportToFileTask)task).setExportFileDir(manager.getOptions().getExportFileDir());
+    	}
     }
 }

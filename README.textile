@@ -39,3 +39,7 @@ XQUERY-MODULE=SampleCorbJob.xqy
 THREAD-COUNT=10
 URIS-MODULE=get-uris.xqy
 POST-BATCH-XQUERY-MODULE=post-batch.xqy
+#XQUERY-MODULE=get-document.xqy
+#PROCESS-TASK=com.marklogic.developer.corb.ExportToFileTask
+#EXPORT-FILE-DIR=/temp/export
+#POST-BATCH-TASK=com.marklogic.corb.test.PostBatchTask

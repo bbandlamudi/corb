@@ -47,6 +47,8 @@ public class TransformOptions {
     
     private String postBatchModule = null;
     private Class<? extends Task> postBatchTaskCls = null;
+    
+    private String exportFileDir = null;
 
     // Defaults for optional arguments
     private String moduleRoot = SLASH
@@ -213,6 +215,14 @@ public class TransformOptions {
      */
     public Class<? extends Task> getPostBatchTaskClass(){
     	return this.postBatchTaskCls;
+    }
+    
+    public String getExportFileDir(){
+    	return this.exportFileDir;
+    }
+    
+    public void setExportFileDir(String exportFileDir){
+    	this.exportFileDir = exportFileDir;
     }
 
     /**

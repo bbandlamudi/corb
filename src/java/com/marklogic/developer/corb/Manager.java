@@ -191,6 +191,7 @@ public class Manager implements Runnable {
         String processTask = getOption(args.length > 8 ? args[8] : null,"PROCESS-TASK",props);
         String postBatchModule = getOption(args.length > 9 ? args[9] : null,"POST-BATCH-XQUERY-MODULE",props);
         String postBatchTask = getOption(args.length > 10 ? args[10] : null,"POST-BATCH-TASK",props);
+        String exportFileDir = getOption(args.length > 11 ? args[11]: null, "EXPORT-FILE-DIR",props);
         
         if(connectionUri == null){
         	usage(); //TODO: Update the usage 
@@ -214,7 +215,7 @@ public class Manager implements Runnable {
 	        Class<?> processCls = Class.forName(processTask);
 	        if(Task.class.isAssignableFrom(processCls)){
 	        	processCls.newInstance(); //sanity check
-	        	if(postBatchTask != null) options.setPostBatchTaskClass((Class<? extends Task>)processCls.asSubclass(Task.class));
+	        	options.setProcessTaskClass((Class<? extends Task>)processCls.asSubclass(Task.class));
 	        }else{
 	        	throw new IllegalArgumentException("PROCESS-TASK must be of type com.marklogic.developer.Task");
 	        }
@@ -222,13 +223,28 @@ public class Manager implements Runnable {
         
         if(postBatchModule != null) options.setPostBatchModule(postBatchModule);
         if(postBatchTask != null){
-	        Class<?> pbatchCls = Class.forName(postBatchTask);
-	        if(Task.class.isAssignableFrom(pbatchCls)){
-	        	pbatchCls.newInstance(); //sanity check
-	        	if(postBatchTask != null) options.setPostBatchTaskClass((Class<? extends Task>)pbatchCls.asSubclass(Task.class));
+	        Class<?> postBatchCls = Class.forName(postBatchTask);
+	        if(Task.class.isAssignableFrom(postBatchCls)){
+	        	postBatchCls.newInstance(); //sanity check
+	        	options.setPostBatchTaskClass((Class<? extends Task>)postBatchCls.asSubclass(Task.class));
 	        }else{
 	        	throw new IllegalArgumentException("POST-BATCH-TASK must be of type com.marklogic.developer.Task");
 	        }
+        }
+        
+        if(exportFileDir != null){
+        	try{
+        	//create a sample file and check for access exceptions
+        	File dirFile = new File(exportFileDir);
+        	//create the current direct if it doesn't exist. Don't create parent directories. 
+        	dirFile.mkdir(); 
+        	File sample = new File(dirFile,"sample.txt");
+        	sample.createNewFile();
+            sample.delete();       	
+        	options.setExportFileDir(exportFileDir);
+        	}catch(IOException exc){
+        		throw new IOException("While accing "+exportFileDir+": "+exc.getMessage(),exc);
+        	}
         }
         
         if(null == options.getProcessTaskClass() && null == options.getProcessModule()){
