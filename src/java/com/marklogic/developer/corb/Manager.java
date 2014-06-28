@@ -384,8 +384,7 @@ public class Manager implements Runnable {
         Session session = contentSource.newSession(modulesDatabase);
         InputStream is = null;
         Content c = null;
-        ContentCreateOptions opts = ContentCreateOptions
-                .newTextInstance();
+        ContentCreateOptions opts = ContentCreateOptions.newTextInstance();
         try {
             for (int i = 0; i < resourceModules.length; i++) {
             	if(resourceModules[i] == null) continue;
@@ -398,8 +397,7 @@ public class Manager implements Runnable {
                 // Next check: if XCC is configured for the filesystem, warn
                 // user
                 else if (options.getModulesDatabase().equals("")) {
-                    logger
-                            .warning("XCC configured for the filesystem: please install modules manually");
+                    logger.warning("XCC configured for the filesystem: please install modules manually");
                     return;
                 }
                 // Finally, if it's configured for a database, install.
@@ -448,8 +446,7 @@ public class Manager implements Runnable {
             boolean ssl = connectionUri.getScheme().equals("xccs");
             contentSource = ssl ? ContentSourceFactory.newContentSource(
                     connectionUri, newTrustAnyoneOptions())
-                    : ContentSourceFactory
-                            .newContentSource(connectionUri);
+                    : ContentSourceFactory.newContentSource(connectionUri);
         } catch (XccConfigException e) {
             logger.logException(connectionUri.toString(), e);
             throw new RuntimeException(e);
@@ -522,8 +519,7 @@ public class Manager implements Runnable {
 
         try {
             session = contentSource.newSession();
-            String urisModule = options.getModuleRoot()
-                    + options.getUrisModule();
+            String urisModule = options.getModuleRoot() + options.getUrisModule();
             logger.info("invoking module " + urisModule);
             Request req = session.newModuleInvoke(urisModule);
             // NOTE: collection will be treated as a CWSV

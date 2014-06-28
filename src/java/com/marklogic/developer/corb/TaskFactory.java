@@ -33,6 +33,7 @@ public class TaskFactory {
     public TaskFactory(Manager manager) {
     	this.manager = manager;
     }
+    
 
     /**
      * @param _uri
@@ -49,7 +50,10 @@ public class TaskFactory {
         	Task task = manager.getOptions().getProcessTaskClass() == null ? 
         				new Transform() : manager.getOptions().getProcessTaskClass().newInstance();
         	if(manager.getOptions().getProcessModule() != null){
-        		task.setModuleURI(manager.getOptions().getModuleRoot() + manager.getOptions().getProcessModule());
+        		String root = manager.getOptions().getModuleRoot();
+        		String module = manager.getOptions().getProcessModule();
+        		module = module.substring(module.lastIndexOf("/")+1);
+        		task.setModuleURI(root + module);
         	}
         	setupTask(task,_uri);
         	return task;
@@ -69,7 +73,10 @@ public class TaskFactory {
         	Task task = manager.getOptions().getPostBatchTaskClass() == null ? 
         				new Transform() : manager.getOptions().getPostBatchTaskClass().newInstance();
         	if(manager.getOptions().getPostBatchModule() != null){
-        		task.setModuleURI(manager.getOptions().getModuleRoot() + manager.getOptions().getPostBatchModule());
+        		String root = manager.getOptions().getModuleRoot();
+        		String module = manager.getOptions().getPostBatchModule();
+        		module = module.substring(module.lastIndexOf("/")+1);
+        		task.setModuleURI(root + module);
         	}
         	setupTask(task,_uri);
         	return task;
