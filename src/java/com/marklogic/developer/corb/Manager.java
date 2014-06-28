@@ -677,7 +677,6 @@ public class Manager implements Runnable {
             pool = null;
         }
         if (null != monitor) {
-            pool.shutdownNow();
             monitor.shutdownNow();
         }
         if (null != monitorThread) {
