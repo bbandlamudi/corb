@@ -25,7 +25,7 @@ public class ExportBatchToFileTask extends ExportToFileTask {
 	}
 	
 	protected void writeToFile(String fileName, ResultSequence seq) throws IOException{
-		if(!seq.hasNext()) return;
+		if(seq == null || !seq.hasNext()) return;
 		synchronized(sync){
 			BufferedOutputStream writer = null;
 			try{

@@ -5,21 +5,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import com.marklogic.xcc.Request;
 import com.marklogic.xcc.ResultSequence;
-import com.marklogic.xcc.Session;
-import com.marklogic.xcc.types.XdmBinary;
-import com.marklogic.xcc.types.XdmItem;
 
 /**
  * @author Bhagat Bandlamudi, MarkLogic Corporation
  */
-public class ExportToFileTask extends AbstractTask {
-	protected static String TRUE = "true";
-	protected static String FALSE = "false";
-	
-	protected static byte[] NEWLINE = "\n".getBytes();
-	
+public class ExportToFileTask extends AbstractTask {		
 	protected String exportDir;
 	
 	public void setExportDir(String exportFileDir){
@@ -34,31 +25,8 @@ public class ExportToFileTask extends AbstractTask {
 		return inputUri.substring(inputUri.lastIndexOf('/')+1);
 	}
 	
-	protected ResultSequence invoke() throws Exception{
-		Thread.yield();
-        Session session = null;
-        try {
-            session = newSession();
-            Request request = session.newModuleInvoke(moduleUri);
-            request.setNewStringVariable("URI", inputUri);
-            // try to avoid thread starvation
-            Thread.yield();
-            ResultSequence response = session.submitRequest(request);
-            session.close();
-            session = null;
-            return response;
-        } finally {
-            if (null != session) {
-                session.close();
-                session = null;
-            }
-            // try to avoid thread starvation
-            Thread.yield();
-        }
-	}
-	
 	protected void writeToFile(String fileName, ResultSequence seq) throws IOException{
-		if(!seq.hasNext()) return;
+		if(seq == null || !seq.hasNext()) return;
 		BufferedOutputStream writer = null;
 		try{
 			writer = new BufferedOutputStream(new FileOutputStream(new File(exportDir,getFileName())));
@@ -74,13 +42,6 @@ public class ExportToFileTask extends AbstractTask {
 		}
 	}
 		
-	protected byte[] getValueAsBytes(XdmItem item){
-		if(item instanceof XdmBinary){
-			return ((XdmBinary) item).asBinaryData();
-		}else{
-			return item.asString().getBytes();
-		}
-	}
 	
 	@Override
 	public String call() throws Exception {

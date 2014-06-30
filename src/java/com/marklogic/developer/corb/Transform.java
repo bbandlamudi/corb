@@ -18,48 +18,18 @@
  */
 package com.marklogic.developer.corb;
 
-import com.marklogic.xcc.Request;
-import com.marklogic.xcc.Session;
-
 /**
  * @author Michael Blakeley, michael.blakeley@marklogic.com
  * @author Bhagat Bandlamudi, MarkLogic Corporation
  *
  */
 public class Transform extends AbstractTask {
-	protected boolean urisBatchRefToXQuery = false;
-	public void setUrisBatchRefToXQuery(boolean urisBatchRefToXQuery){
-		this.urisBatchRefToXQuery = urisBatchRefToXQuery;
-	}
     /*
      * (non-Javadoc)
      *
      * @see java.util.concurrent.Callable#call()
      */
     public String call() throws Exception {
-        // try to avoid thread starvation
-        Thread.yield();
-        Session session = null;
-        try {
-            session = newSession();
-            Request request = session.newModuleInvoke(moduleUri);
-            request.setNewStringVariable("URI", inputUri);
-            if(urisBatchRefToXQuery && properties.containsKey(Manager.URIS_BATCH_REF)){
-            	request.setNewStringVariable(Manager.URIS_BATCH_REF, properties.getProperty(Manager.URIS_BATCH_REF));
-            }
-            // try to avoid thread starvation
-            Thread.yield();
-            String response = session.submitRequest(request).asString();
-            session.close();
-            session = null;
-            return response;
-        } finally {
-            if (null != session) {
-                session.close();
-                session = null;
-            }
-            // try to avoid thread starvation
-            Thread.yield();
-        }
+    	return invoke().asString();
     }
 }
