@@ -36,6 +36,13 @@
     </fileset>
     <pathelement path="${build.dir}"/>
   </path>
+	
+  <target name="clean">
+	<delete dir="${dist.dir}"/>
+  	<delete>
+  		<fileset dir="${build.dir}" includes="**/*.class"/>
+  	</delete>
+  </target>
 
   <target name="build"
           description="Compile main source tree java files">
