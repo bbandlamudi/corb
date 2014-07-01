@@ -14,7 +14,7 @@ public abstract class PostBatchUpdateFileTask extends ExportToFileTask {
 	protected String getFileName(){
 		String fileName = getProperty("EXPORT-FILE-NAME");
 		if(fileName == null || (fileName=fileName.trim()).length() == 0){
-			String batchRef = properties.getProperty(Manager.URIS_BATCH_REF);
+			String batchRef = getProperty(Manager.URIS_BATCH_REF);
 			if(batchRef != null && (batchRef=batchRef.trim()).length() > 0){
 				fileName = batchRef.substring(batchRef.lastIndexOf('/')+1); 
 			}
@@ -78,9 +78,9 @@ public abstract class PostBatchUpdateFileTask extends ExportToFileTask {
 	@Override
 	public String call() throws Exception {
 		Thread.yield(); // try to avoid thread starvation
-		invoke();
-		Thread.yield(); // try to avoid thread starvation
 		writeToFile(getFileName());
+		Thread.yield(); // try to avoid thread starvation
+		invoke();
 		Thread.yield(); // try to avoid thread starvation
 		return TRUE;
 	}

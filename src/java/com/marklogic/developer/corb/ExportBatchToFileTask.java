@@ -13,7 +13,7 @@ public class ExportBatchToFileTask extends ExportToFileTask {
 	protected String getFileName(){
 		String fileName = getProperty("EXPORT-FILE-NAME");
 		if(fileName == null || (fileName=fileName.trim()).length() == 0){
-			String batchRef = properties.getProperty(Manager.URIS_BATCH_REF);
+			String batchRef = getProperty(Manager.URIS_BATCH_REF);
 			if(batchRef != null && (batchRef=batchRef.trim()).length() > 0){
 				fileName = batchRef.substring(batchRef.lastIndexOf('/')+1); 
 			}
