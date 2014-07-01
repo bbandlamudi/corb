@@ -33,55 +33,47 @@ public abstract class PostBatchUpdateFileTask extends ExportToFileTask {
 		String bottomContent = getBottomContent();
 		bottomContent = bottomContent != null ? bottomContent.trim() : "";
 		
-
-			File exportFile = new File(exportDir,getFileName());
-			if(exportFile.exists()){
-				if(topContent.length() > 0){
-					InputStream in =  new BufferedInputStream(new FileInputStream(exportFile));
-					File newFile = new File(exportDir,getFileName()+".new");
-					BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(newFile,true));
-					out.write(topContent.getBytes());
-					out.write(NEWLINE);				
-					copyInputStreamToOutputStream(in,out);
-					//no need to close the streams as they should already be closed. 
-					
-					exportFile.delete();
-					newFile.renameTo(exportFile);
-				}			
-
-				if(bottomContent.length() > 0){
-					BufferedOutputStream out = null;
-					try{
-						out = new BufferedOutputStream(new FileOutputStream(new File(exportDir,getFileName()),true));
-						out.write(NEWLINE);
+		File exportFile = new File(exportDir,getFileName());
+		if(exportFile.exists() && (topContent.length() > 0 || bottomContent.length() > 0)){
+			File newFile = new File(exportDir,getFileName()+".new");
+			
+			InputStream in =  null;
+			OutputStream out = null;
+			try{
+				try{
+					in = new BufferedInputStream(new FileInputStream(exportFile));
+					out = new BufferedOutputStream(new FileOutputStream(newFile,true));
+					//write top content
+					if(topContent.length() > 0){
+						out.write(topContent.getBytes());
+						out.write(NEWLINE);	
+					}
+					//copy the original file
+				    final byte[] buffer = new byte[1024];
+			        int n;
+			        while ((n = in.read(buffer)) != -1){
+			           out.write(buffer, 0, n);
+			        }
+			        //copy bottom content    
+			        if(bottomContent.length() > 0){
+			        	out.write(NEWLINE);
 						out.write(bottomContent.getBytes());
-					}finally{
-						if(out != null){
-							out.close();
-						}
+			        }
+				}finally{
+					if(out != null){
+						out.close();
 					}
 				}
+			}finally{
+				if(in != null){
+					in.close();
+				}
 			}
-		
+			
+			exportFile.delete();
+			newFile.renameTo(exportFile);
+		}		
 	}
-	
-
-	
-	public void copyInputStreamToOutputStream(final InputStream in, final OutputStream out) throws IOException{
-		try{
-	        try{
-	            final byte[] buffer = new byte[1024];
-	            int n;
-	            while ((n = in.read(buffer)) != -1)
-	                out.write(buffer, 0, n);
-	        }finally{
-	            out.close();
-	        }
-	    }finally{
-	        in.close();
-	    }
-	}
-	
 	
 	@Override
 	public String call() throws Exception {

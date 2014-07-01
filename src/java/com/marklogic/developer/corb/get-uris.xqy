@@ -40,6 +40,6 @@ let $uris := cts:uris(
   then xdmp:eval($URIS)
   else error(
     'CORB-UNEXPECTED', text { "Unexpected type:", $TYPE }) )
-return ('uris-module-metadata', count($uris), $uris)
+return ('RefToBatch', count($uris), $uris)
 
 (: get-uris.xqy :)
