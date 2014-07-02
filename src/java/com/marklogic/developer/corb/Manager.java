@@ -110,7 +110,7 @@ public class Manager implements Runnable {
 
     }
     
-    public static String URIS_BATCH_REF = "URIS_BATCH_REF";
+    public static String URIS_BATCH_REF = "URIS-BATCH-REF";
 
     private static String versionMessage = "version " + VERSION + " on "
             + System.getProperty("java.version") + " ("

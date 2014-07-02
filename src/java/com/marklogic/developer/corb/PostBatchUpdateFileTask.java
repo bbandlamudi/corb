@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public abstract class PostBatchUpdateFileTask extends ExportToFileTask {
+public class PostBatchUpdateFileTask extends ExportToFileTask {
 	
 	protected String getFileName(){
 		String fileName = getProperty("EXPORT-FILE-NAME");
@@ -22,9 +22,18 @@ public abstract class PostBatchUpdateFileTask extends ExportToFileTask {
 		return fileName;
 	}
 	
-	protected abstract String getTopContent();
+	protected String getTopContent(){
+		String topContent = getProperty("EXPORT-FILE-TOP-CONTENT");
+		String batchRef = getProperty(Manager.URIS_BATCH_REF);
+		if(topContent != null && batchRef != null){
+			topContent = topContent.replace("@"+Manager.URIS_BATCH_REF, batchRef);
+		}
+		return topContent;
+	}
 	
-	protected abstract String getBottomContent();
+	protected String getBottomContent(){
+		return getProperty("EXPORT-FILE-BOTTOM-CONTENT");
+	}
 		
 	protected void writeToFile(String fileName) throws IOException{		
 		String topContent = getTopContent();

@@ -22,7 +22,16 @@ PROCESS-TASK (Java Class that implements com.marklogic.developer.Task or extends
 POST-BATCH-XQUERY-MODULE (XQuery module, if specified, will be run after batch processing is completed)
 POST-BATCH-TASK (Java Class that implements com.marklogic.developer.Task or extends com.marklogic.developer.AbstractTask- can be used in place or in addition to POST-BATCH-XQUERY-MODULE)
 EXPORT-FILE-DIR (export directory for com.marklogic.developer.corb.ExportToFileTask or similar tasks)
+
+Optional properties only supported via corb.proeprties file
+------
 EXPORT_FILE_NAME (shared file to export all the tasks used by com.marklogic.developer.corb.ExportBatchToFileTask- NOT full path to file)
+EXPORT-FILE-TOP-CONTENT (used by PostBatchUpdateFileTask to insert content at the top to EXPORT_FILE_NAME after batch process is complete, if it finds the text @URIS-BATCH-REF it replaces it by batch reference sent by URIS_MODULE)
+EXPORT-FILE-BOTTOM-CONTENT (used by PostBatchUpdateFileTask to append content to EXPORT_FILE_NAME after batch process is complete)
+
+Internal properties
+--------
+URIS-BATCH-REF (This is not a user specified property. URIS-MODULE can optionally send this a batch reference which can be used by post batch hooks)
 
 Running from command line:
 Usage 1:
