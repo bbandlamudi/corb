@@ -21,6 +21,7 @@
 -->
 <project name="corb" basedir="." default="jar">
   <property name="name" value="corb"/>
+	<property name="version" value="1.1"/>
   <property file="build.properties"/>
 
   <property name="src.dir" value="java"/>
@@ -59,7 +60,7 @@
   <target name="jar" depends="build"
           description="generate the jarfile">
     <mkdir dir="${dist.dir}"/>
-    <jar jarfile="${dist.dir}/${name}.jar" basedir="${build.dir}"
+    <jar jarfile="${dist.dir}/${name}-${version}.jar" basedir="${build.dir}"
          compress="true" index="true"
          excludes="*.java,*.class,**/.*,**/*~"/>
   </target>
